@@ -1,50 +1,69 @@
-# Welcome to your Expo app 👋
+# My Book Journal
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+ Descripción del proyecto:
 
-## Get started
+**My Book Journal** es una aplicación móvil diseñada para que los usuarios puedan registrar y organizar los libros que leen.
+La aplicación permite guardar información detallada sobre cada libro, como:
 
-1. Install dependencies
+* Portada del libro
+* Título, autor y género
+* Formato de lectura (físico, digital o audiolibro)
+* Calificación con estrellas
+* Fechas de inicio y finalización de lectura
+* Sinopsis
+* Personajes principales
+* Personajes favoritos y más odiados
+* Nivel de *spicy* y lágrimas derramadas
+* Escenas, frases favoritas y canción asociada
 
-   ```bash
-   npm install
-   ```
+El objetivo de la aplicación es ofrecer una experiencia visual tipo **diario de lectura**, donde el usuario pueda recordar y registrar su experiencia con cada libro leído.
 
-2. Start the app
+## Tecnologías utilizadas:
 
-   ```bash
-   npx expo start
-   ```
+Las principales tecnologías usadas en el desarrollo del proyecto son:
 
-In the output, you'll find options to open the app in a
+* **React Native** – Framework para desarrollo de aplicaciones móviles.
+* **Expo** – Plataforma que facilita el desarrollo y ejecución de apps React Native.
+* **TypeScript** – Superset de JavaScript utilizado para mejorar la tipificación del código.
+* **Expo Router** – Sistema de navegación basado en rutas.
+* **SQLite** – Base de datos local para almacenar la información de los libros. TODAVIA NO SE HA IMPLEMENTADO
+* **React Hooks** – Manejo del estado de los componentes.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Instrucciones para ejecutar la aplicación:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 1. Clonar el repositorio
 
-## Get a fresh project
+git clone https://github.com/USUARIO/NOMBRE_DEL_REPOSITORIO.git
 
-When you're ready, run:
+### 2. Entrar a la carpeta del proyecto
 
-```bash
-npm run reset-project
-```
+cd NOMBRE_DEL_REPOSITORIO
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 3. Instalar dependencias
 
-## Learn more
+npm install o yarn install
 
-To learn more about developing your project with Expo, look at the following resources:
+### 4. Ejecutar la aplicación
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+npx expo start
 
-## Join the community
+Esto abrirá el panel de **Expo**, donde podrás ejecutar la aplicación en:
 
-Join our community of developers creating universal apps.
+* Un emulador de Android
+* Un simulador de iOS
+* Un dispositivo físico usando la app **Expo Go**
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Estado del proyecto:
+
+El proyecto se encuentra actualmente en desarrollo.
+Algunas funcionalidades todavía están en proceso de implementación, como:
+
+* Edición de perfil de usuario
+* Exportación de biblioteca
+* Respaldo automático
+* Sensor de luz para cambio automático de ambiente (día/tarde/noche)
+* Sensor de movimiento
+
+## Autor:
+
+Proyecto desarrollado por **Rodrigo García**.
