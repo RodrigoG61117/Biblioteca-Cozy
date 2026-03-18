@@ -19,7 +19,7 @@ Las principales tecnologías usadas en el desarrollo del proyecto son:
 * **Expo** – Plataforma que facilita el desarrollo y ejecución de apps React Native.
 * **TypeScript** – Superset de JavaScript utilizado para mejorar la tipificación del código.
 * **Expo Router** – Sistema de navegación basado en rutas.
-* **SQLite** – Base de datos local para almacenar la información de los libros. TODAVIA NO SE HA IMPLEMENTADO
+* **SQLite** – Base de datos local para almacenar la información de los libros.
 * **React Hooks** – Manejo del estado de los componentes.
 
 ## Instrucciones para ejecutar la aplicación:
@@ -38,6 +38,8 @@ Esto abrirá el panel de **Expo**, donde podrás ejecutar la aplicación en:
 ## Estado del proyecto:
 El proyecto se encuentra actualmente en desarrollo.
 Algunas funcionalidades todavía están en proceso de implementación, como:
+* Creación de la base de datos
+* Que los datos se guarden en la base de datos
 * Edición de perfil de usuario
 * Exportación de biblioteca
 * Respaldo automático
