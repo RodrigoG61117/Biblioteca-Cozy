@@ -9,9 +9,10 @@ import {
   ScrollView, ImageBackground, 
   KeyboardAvoidingView, Platform
 } from "react-native";
+import { useRouter } from 'expo-router';
 
 export default function Ajustes() {
-
+  const router = useRouter();
   const [autoMode,setAutoMode] = useState(false);
   const [backup,setBackup] = useState(false);
 
@@ -70,6 +71,11 @@ export default function Ajustes() {
 
       </View>
 
+      <View style={styles.footer}>
+          <TouchableOpacity onPress={() => router.push("/explore")}>
+            <Image source={require('../../assets/gui/regresar_atras.png')} style={styles.navIcon} />
+          </TouchableOpacity>
+      </View>
 
       {/* BOTONES */}
 
@@ -186,5 +192,19 @@ footerLink: {
     fontFamily: 'AlmondMilky',
     color: '#3D464A',
 },
+
+footer:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    width:'102%',
+    position:'absolute',
+    bottom: (55 + 10),
+  },
+
+  navIcon:{ 
+    width:50, 
+    height:50, 
+    resizeMode:'contain' 
+  },
 
 });

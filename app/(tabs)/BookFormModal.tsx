@@ -52,50 +52,36 @@ const BookFormModal: React.FC<Props> = ({ visible, onClose }) => {
   const [favoriteQuotes,setFavoriteQuotes] = useState([""]);
   const [song,setSong] = useState("");
 
-  const changeStar = (index:number) => {
+  const changeRating = (
+    index: number,
+    current: number[],
+    setter: any
+  ) => {
+    const newArray = [0,0,0,0,0];
 
-    const newStars = [...stars];
-
-    if(newStars[index] === 0){
-      newStars[index] = 1;
-    } 
-    else if(newStars[index] === 1){
-      newStars[index] = 2;
+    // Si está vacío → pasa a MEDIA
+    if(current[index] === 0){
+      for(let i = 0; i < index; i++){
+      newArray[i] = 2; // completas antes
     }
-    else{
-      newStars[index] = 0;
+    newArray[index] = 1; // media
+  }
+  // Si está en MEDIA → pasa a COMPLETA
+  else if(current[index] === 1){
+
+    for(let i = 0; i <= index; i++){
+      newArray[i] = 2; // todas completas
     }
 
-    setStars(newStars);
-  };
-
-  const changeSpicy = (index:number) => {
-
-    const newSpicy = [...spicy];
-
-    if(newSpicy[index] === 0) newSpicy[index] = 1;
-    else if(newSpicy[index] === 1) newSpicy[index] = 2;
-    else newSpicy[index] = 0;
-
-    setSpicy(newSpicy);
-  };
-
-  const changeTear = (index:number) => {
-
-  const newTears = [...tears];
-
-  if(newTears[index] === 0){
-    newTears[index] = 1;
   }
-  else if(newTears[index] === 1){
-    newTears[index] = 2;
-  }
+
+  // Si está en COMPLETA → RESET
   else{
-    newTears[index] = 0;
+
+    // todo queda en 0
   }
 
-  setTears(newTears);
-
+  setter(newArray);
 };
 
   const addCharacter = () => {
@@ -322,7 +308,7 @@ const BookFormModal: React.FC<Props> = ({ visible, onClose }) => {
               }
 
               return(
-                <TouchableOpacity key={index} onPress={()=>changeStar(index)}>
+                <TouchableOpacity key={index} onPress={()=>changeRating(index, stars, setStars)}>
                   <Image source={image} style={styles.star}/>
                 </TouchableOpacity>
               )
@@ -408,7 +394,7 @@ const BookFormModal: React.FC<Props> = ({ visible, onClose }) => {
                 }
 
                 return(
-                  <TouchableOpacity key={index} onPress={()=>changeTear(index)}>
+                  <TouchableOpacity key={index} onPress={()=>changeRating(index, tears, setTears)}>
                     <Image source={image} style={styles.star}/>
                   </TouchableOpacity>
                 )
@@ -435,7 +421,7 @@ const BookFormModal: React.FC<Props> = ({ visible, onClose }) => {
                 }
 
                 return(
-                  <TouchableOpacity key={index} onPress={()=>changeSpicy(index)}>
+                  <TouchableOpacity key={index} onPress={()=>changeRating(index, spicy, setSpicy)}>
                     <Image source={image} style={styles.star}/>
                   </TouchableOpacity>
                 );
@@ -593,12 +579,21 @@ const BookFormModal: React.FC<Props> = ({ visible, onClose }) => {
 
           </Modal>
 
-          <View style={styles.footer}>
-
-            <TouchableOpacity onPress={()=>{resetForm(); onClose();}}>
-              <Image source={require('../../assets/gui/x_icono.png')} style={styles.navIcon} />
+            <TouchableOpacity style={styles.closeBtn} onPress={()=>{ resetForm(); onClose();}}>
+              <Image source={require('../../assets/gui/x_icono.png')} style={styles.closeIcon}/>
             </TouchableOpacity>
-            
+
+          <View style={styles.footer}>
+            {page < 5 && (
+              <TouchableOpacity onPress={() => {
+                if (page > 1) {
+                  setPage(page - 1);
+                }
+              }}>
+                <Image source={require('../../assets/gui/regresar_atras.png')} style={styles.navIcon} />
+              </TouchableOpacity>
+            )}
+
             {page < 4 && (
               <TouchableOpacity onPress={() => setPage(page + 1)}>
                 <Image source={require('../../assets/gui/regresar.png')} style={styles.navIcon} />
@@ -787,14 +782,14 @@ const styles = StyleSheet.create({
   footer:{
     flexDirection:'row',
     justifyContent:'space-between',
-    width:'50%',
+    width:'46%',
     position:'absolute',
-    bottom:hp(14),
+    bottom:hp(15),
   },
 
   navIcon:{ 
-    width:60, 
-    height:60, 
+    width:50, 
+    height:50, 
     resizeMode:'contain' 
   },
 
@@ -850,7 +845,19 @@ const styles = StyleSheet.create({
   color:'#fff',
   fontSize:18,
   textAlign:'center'
-  }
+  },
+
+  closeBtn:{
+  position:"absolute",
+  top: hp(12),
+  right: wp(40)
+},
+
+closeIcon:{
+  width:40,
+  height:40,
+  resizeMode:"contain"
+}
 });
 
 export default BookFormModal;

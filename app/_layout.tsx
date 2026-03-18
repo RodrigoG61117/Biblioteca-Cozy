@@ -48,7 +48,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+      <Stack screenOptions={{ headerShown: false }}>
         {/* Tu pantalla principal (Login/index) */}
         <Stack.Screen 
           name="index" 
