@@ -5,10 +5,10 @@ import {
   StyleSheet, Alert, ImageBackground, 
   KeyboardAvoidingView, Platform, ScrollView 
 } from 'react-native';
+import { loginUser } from '../database/dbFunctions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../services/firebase';
-
+const SESSION_KEY = "userSession";
 export default function Login() {
 
   const [email, setEmail] = useState('');
@@ -17,30 +17,32 @@ export default function Login() {
 
   const handleLogin = async () => {
 
-    if (!email || !password) {
-      Alert.alert('Error', 'Por favor completa todos los campos');
+  if (!email || !password) {
+    Alert.alert('Error', 'Por favor completa todos los campos');
+    return;
+  }
+
+  try {
+
+    const user = await loginUser(email, password) as any;
+
+    if (!user) {
+      Alert.alert('Error', 'Correo o contraseña incorrectos');
       return;
     }
 
-    try {
+// ✅ Guarda la sesión
+    await AsyncStorage.setItem(SESSION_KEY, 'true')
 
-      await signInWithEmailAndPassword(auth, email, password);
+    Alert.alert('Bienvenido', user.username);
 
-      Alert.alert('Bienvenido', 'Inicio de sesión correcto');
+    router.replace('/(tabs)/explore');
 
-      // Ir a la pantalla principal
-      router.replace('/(tabs)/explore');
-
-    } catch (error: any) {
-
-      console.log(error.code);
-
-      Alert.alert(
-        'Error',
-        'Correo o contraseña incorrectos'
-      );
-    }
-  };
+  } catch (error) {
+    console.log(error);
+    Alert.alert('Error', 'Algo salió mal');
+  }
+};
 
   return (
     <ImageBackground 

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import { 
   View, Text, TextInput, TouchableOpacity, 
   StyleSheet, Alert, ImageBackground, 
   KeyboardAvoidingView, Platform, ScrollView 
 } from 'react-native';
+import { insertUser, createUserTable } from '../database/dbFunctions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../services/firebase';
+const SESSION_KEY = "userSession";
+
 
 export default function Register() {
 
@@ -16,45 +18,56 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+   useEffect(() => {
+    createUserTable(); // 🔥 ESTO DEBE CORRER SIEMPRE AL INICIAR
+}, []);
+
   const router = useRouter();
+
+  // ✅ Agrega este useEffect al inicio
+  useEffect(() => {
+    const checkSession = async () => {
+      const session = await AsyncStorage.getItem(SESSION_KEY);
+      if (session === 'true') {
+        router.replace('/(tabs)/explore');
+        return;
+      }
+      // Si no hay sesión, crea las tablas normalmente
+      createUserTable();
+    };
+
+    checkSession();
+  }, []);
 
   const handleRegister = async () => {
 
-    // Validar campos vacíos
-    if (!username || !email || !password || !confirmPassword) {
-      Alert.alert('Error', 'Completa todos los campos');
-      return;
-    }
+  if (!username || !email || !password || !confirmPassword) {
+    Alert.alert('Error', 'Completa todos los campos');
+    return;
+  }
 
-    // Validar que las contraseñas coincidan
-    if (password !== confirmPassword) {
-      Alert.alert('Error', 'Las contraseñas no coinciden');
-      return;
-    }
+  if (password !== confirmPassword) {
+    Alert.alert('Error', 'Las contraseñas no coinciden');
+    return;
+  }
 
-    try {
-      // Crear usuario en Firebase
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+  try {
 
-      // Guardar nombre de usuario
-      await updateProfile(userCredential.user, {
-        displayName: username,
-      });
+    await insertUser({
+      username,
+      email,
+      password
+    });
 
-      Alert.alert('Éxito', 'Cuenta creada correctamente');
+    Alert.alert('Éxito', 'Cuenta creada');
 
-      // Ir a la pantalla principal
-      router.replace('/login');
+    router.replace('/login');
 
-    } catch (error: any) {
-      console.log(error.code);
-      Alert.alert('Error', 'No se pudo crear la cuenta');
-    }
-  };
+  } catch (error) {
+    console.log(error);
+    Alert.alert('Error', 'No se pudo registrar');
+  }
+};
 
   return (
     <ImageBackground 
